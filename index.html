@@ -1,72 +1,101 @@
 <!doctype html>
 <html>
-<head>
-	<meta charset='UTF-8' />
-	<style>
-		input, textarea {border:1px solid #CCC;margin:0px;padding:0px}
+    <head>
+        <meta charset='UTF-8' />
+        <style>
+            input, textarea {border:1px solid #CCC;margin:0px;padding:0px}
 
-		#body {max-width:800px;margin:auto}
-		#log {width:100%;height:400px}
-		#message {width:100%;line-height:20px}
-	</style>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="fancywebsocket.js"></script>
-	<script>
-		var Server;    
+            #body {max-width:800px;margin:auto}
+            #log {width:100%;height:400px}
+            #message {width:100%;line-height:20px}
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="fancywebsocket.js"></script>
+        <script>
+            var Server;
 
-		function log( text ) {
-			$log = $('#log');
-			//Add text to log
-			$log.append(($log.val()?"\n":'')+text);
-			//Autoscroll
-			$log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
-		}
+//            function log(text) {
+//                $log = $('#log');
+//                //Add text to log
+//                $log.append(($log.val() ? "\n" : '') + text);
+//                //Autoscroll
+//                $log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
+//            }
+                
+              function log(data){
+                  $('.1').html(data);
+              }
 
-		function send( text ) {
-			Server.send( 'message', text );
-		}
+            function llenadoEspacio(data) {
+                var cadena = data;
+                var elemento = cadena.substring(0, 3);
+                var contenido = cadena.substring(3);
+                switch (elemento) {
+                case '[0]':
+                        $('.1').html(contenido);
+                        break;
+                case '[1]':
+                        $('.2').html(contenido);
+                        break;
+                case '[2]':
+                        $('.3').html(contenido);
+                        break;
+//                default:
+//                        default code block
+                }
+            }
 
-		$(document).ready(function() {
-			log('Connecting...');
-			Server = new FancyWebSocket('ws://127.0.0.1:9300');
+//            function send(text) {
+//                Server.send('message', text);
+//            }
 
-			$('#message').keypress(function(e) {
-				if ( e.keyCode == 13 && this.value ) {
-					log( 'You: ' + this.value );
-					send( this.value );
+            $(document).ready(function () {
+                log('Connecting...');
+                Server = new FancyWebSocket('ws://192.168.1.171:9300');
 
-					$(this).val('');
-				}
-			});
+//                $('#message').keypress(function (e) {
+//                    if (e.keyCode == 13 && this.value) {
+//                        log('You: ' + this.value);
+//                        send(this.value);
+//
+//                        $(this).val('');
+//                    }
+//                });
 
-			//Let the user know we're connected
-			Server.bind('open', function() {
-				log( "Connected." );
-			});
+                //Let the user know we're connected
+                Server.bind('open', function () {
+                    log("Connected.");
+                });
 
-			//OH NOES! Disconnection occurred.
-			Server.bind('close', function( data ) {
-				log( "Disconnected." );
-			});
+                //OH NOES! Disconnection occurred.
+                Server.bind('close', function (data) {
+                    log("Disconnected.");
+                });
 
-			//Log any messages sent from server
-			Server.bind('message', function( payload ) {
-				log( payload );
-			});
+                //Log any messages sent from server
+                Server.bind('message', function (payload) {
+                    //log(payload);
+                    var salida = llenadoEspacio(payload);
+                    $('.area_mensaje').html('<h1>' + salida + '<h1>');
+                });
 
-			Server.connect();
-		});
-	</script>
-</head>
 
-<body>
-	<div id='body'>
-		<textarea id='log' name='log' readonly='readonly'></textarea><br/>
-		<input type='text' id='message' name='message' />
-	</div>
-    <div class="area_mensaje">
-        
-    </div>
-</body>
+
+                Server.connect();
+            });
+        </script>
+    </head>
+
+    <body>
+        <div id='body'>
+
+            <!--<textarea id='log' name='log' readonly='readonly'></textarea><br/>-->
+            <!--<input type='text' id='message' name='message' />-->
+        </div>
+
+        <div class="1"></div>
+        <div class="2"></div>
+        <div class="3"></div>
+    </body>
 
 </html>

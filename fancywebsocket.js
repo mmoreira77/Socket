@@ -38,7 +38,8 @@ var FancyWebSocket = function(url)
 		var chain = callbacks[event_name];
 		if(typeof chain == 'undefined') return; // no callbacks for this event
 		for(var i = 0; i < chain.length; i++){
-			chain[i]( message )
+                            chain[i]( message )
+                            
 		}
 	}
 };

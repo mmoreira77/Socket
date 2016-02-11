@@ -8,20 +8,32 @@
         <script src="fancywebsocket.js"></script>
     </head>
     <body>
+        <h2>A</h2>
         <input type="text" class="caja">
         <input type="button" value="Enviar" class="btn">
+        <hr>
+        <h2>B</h2>
+        <input type="text" class="caja2">
+        <input type="button" value="Enviar" class="btn2">
 
 
         <script>
-            Server = new FancyWebSocket('ws://127.0.0.1:9300');
+            Server = new FancyWebSocket('ws://192.168.1.171:9300');
 
             $('.btn').click(function (e) {
-                var t = $('.caja').val();
+                var t = '[0]' + $('.caja').val();
+                var datos = {'message':t, 'tipo':'a'};
                 Server.send('message', t);
                 $('.caja').val('');
             });
+            
+            $('.btn2').click(function(){
+                var z = '[1]' + $('.caja2').val();
+                var datos = {'message':z,'tipo':'b'}
+                Server.send('massage', z);
+                $('.caja2').val('');
+            });
             Server.connect();
-
         </script>
     </body>
 

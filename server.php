@@ -23,7 +23,8 @@ function wsOnMessage($clientID, $message, $messageLength, $binary) {
 		//Send the message to everyone but the person who said it
 		foreach ( $Server->wsClients as $id => $client )
 			if ( $id != $clientID )
-				$Server->wsSend($id, "Visitor $clientID ($ip) said \"$message\"");
+//				$Server->wsSend($id, "Visitor $clientID ($ip) said \"$message\"");
+                $Server->wsSend($id,$message);
 }
 
 // when a client connects
@@ -59,6 +60,6 @@ $Server->bind('open', 'wsOnOpen');
 $Server->bind('close', 'wsOnClose');
 // for other computers to connect, you will probably need to change this to your LAN IP or external IP,
 // alternatively use: gethostbyaddr(gethostbyname($_SERVER['SERVER_NAME']))
-$Server->wsStartServer('127.0.0.1', 9300);
+$Server->wsStartServer('192.168.1.171', 9300);
 
 ?>
