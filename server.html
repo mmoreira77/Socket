@@ -12,9 +12,14 @@
         <input type="text" class="caja">
         <input type="button" value="Enviar" class="btn">
         <hr>
+        
         <h2>B</h2>
         <input type="text" class="caja2">
         <input type="button" value="Enviar" class="btn2">
+        <hr>
+        <h2>C</h2>
+        <input type="text" class="caja3">
+        <input type="button" value="Enviar" class="btn3">
 
 
         <script>
@@ -22,16 +27,22 @@
 
             $('.btn').click(function (e) {
                 var t = '[0]' + $('.caja').val();
-                var datos = {'message':t, 'tipo':'a'};
+                //var datos = {'message':t, 'tipo':'a'};
                 Server.send('message', t);
                 $('.caja').val('');
             });
             
             $('.btn2').click(function(){
                 var z = '[1]' + $('.caja2').val();
-                var datos = {'message':z,'tipo':'b'}
+                //var datos = {'message':z,'tipo':'b'}
                 Server.send('massage', z);
                 $('.caja2').val('');
+            });
+            
+            $('.btn3').click(function(){
+                var m = '[2]' + $('.caja3').val();
+                Server.send('massage', m);
+                $('.caja3').val('');
             });
             Server.connect();
         </script>
